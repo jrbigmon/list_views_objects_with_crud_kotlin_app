@@ -88,6 +88,15 @@ class MainActivity : AppCompatActivity() {
                 disableButtonEdit()
             }
         })
+
+        binding.buttonClear.setOnClickListener({
+            userList.clear()
+            clearFields()
+            reloadArray(adapter)
+            enableButtonInsert()
+            disableButtonRemove()
+            disableButtonEdit()
+        })
     }
 
     private fun clearFields() {
