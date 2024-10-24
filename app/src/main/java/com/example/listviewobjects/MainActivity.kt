@@ -21,7 +21,7 @@ class MainActivity : AppCompatActivity() {
         userList.add(User("Vagner", "123"))
 
         val adapter = ArrayAdapter(this, android.R.layout.simple_list_item_1, userList)
-        reloadArray(adapter)
+        binding.listUsers.adapter = adapter
 
         disableButtonEdit()
         disableButtonRemove()
@@ -40,17 +40,22 @@ class MainActivity : AppCompatActivity() {
 
         binding.buttonEdit.setOnClickListener({
             if (indexClicked != -1) {
-                val username = binding.editUsername.text.toString()
-                val password = binding.editPassword.text.toString()
+                val username = binding.editUsername.text.toString().trim()
+                val password = binding.editPassword.text.toString().trim()
 
                 val user = userList.get(indexClicked)
 
-                user.username = username
-                user.password = password
+                if (!username.isEmpty() && !password.isEmpty()) {
+                    user.username = username
+                    user.password = password
 
-                clearFields()
-                reloadArray(adapter)
-                enableButtonInsert()
+                    clearFields()
+                    reloadArray(adapter)
+                    enableButtonInsert()
+                } else {
+                    Toast.makeText(this, "Username and password are required", Toast.LENGTH_SHORT)
+                        .show()
+                }
             }
         })
 
@@ -96,7 +101,7 @@ class MainActivity : AppCompatActivity() {
     }
 
     private fun reloadArray(adapter: ArrayAdapter<User>) {
-        binding.listUsers.adapter = adapter
+        adapter.notifyDataSetChanged()
     }
 
     private fun disableButtonInsert() {
