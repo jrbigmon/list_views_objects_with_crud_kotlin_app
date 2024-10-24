@@ -43,9 +43,8 @@ class MainActivity : AppCompatActivity() {
                 val username = binding.editUsername.text.toString().trim()
                 val password = binding.editPassword.text.toString().trim()
 
-                val user = userList.get(indexClicked)
-
                 if (!username.isEmpty() && !password.isEmpty()) {
+                    val user = userList.get(indexClicked)
                     user.username = username
                     user.password = password
 
